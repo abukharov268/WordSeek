@@ -1,0 +1,2 @@
+setuptools>=43 ; python_version >= "3.12" and python_version < "4.0"
+meson-python>=0.18 ; python_version >= "3.12" and python_version < "4.0"

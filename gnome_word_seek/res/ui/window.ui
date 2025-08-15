@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
+<interface>
+  <!-- interface-name window.ui -->
+  <requires lib="gio" version="2.0"/>
+  <requires lib="gtk" version="4.18"/>
+  <requires lib="libadwaita" version="1.4"/>
+  <template class="main_window" parent="AdwApplicationWindow">
+    <property name="default-height">500</property>
+    <property name="default-width">400</property>
+    <signal name="close-request" handler="on_close_request"/>
+    <child>
+      <object class="AdwNavigationView" id="nav_view">
+        <signal name="popped" handler="on_nav_back"/>
+        <child>
+          <object class="AdwNavigationPage">
+            <property name="can-pop">False</property>
+            <property name="child">
+              <object class="AdwToolbarView" id="main_view">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <property name="accessible-role">toolbar</property>
+                    <property name="title-widget">
+                      <object class="GtkBox">
+                        <property name="hexpand">True</property>
+                        <property name="margin-start">20</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkSearchEntry" id="search_entry">
+                            <property name="hexpand">True</property>
+                            <property name="hexpand-set">True</property>
+                            <property name="placeholder-text">Find with "WrdSeek"</property>
+                            <signal name="activate" handler="on_search_activate"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="action-name">win.search_clipboard</property>
+                            <property name="icon-name">edit-paste-symbolic</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="direction">none</property>
+                        <property name="halign">end</property>
+                        <property name="has-frame">False</property>
+                        <property name="popover">
+                          <object class="GtkPopoverMenu">
+                            <property name="menu-model">main_menu</property>
+                          </object>
+                        </property>
+                        <property name="primary">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesPage">
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <child>
+                          <object class="AdwPreferencesRow">
+                            <property name="margin-bottom">6</property>
+                            <property name="margin-end">6</property>
+                            <property name="margin-start">6</property>
+                            <property name="margin-top">4</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkTextView">
+                                <property name="buffer">
+                                  <object class="GtkTextBuffer">
+                                    <property name="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</property>
+                                  </object>
+                                </property>
+                                <property name="cursor-visible">False</property>
+                                <property name="editable">False</property>
+                                <property name="hexpand">True</property>
+                                <property name="wrap-mode">word-char</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="tag">main</property>
+            <property name="title">Main</property>
+            <child>
+              <object class="GtkShortcutController">
+                <child>
+                  <object class="GtkShortcut">
+                    <property name="action">action(win.page_find)</property>
+                    <property name="trigger">&lt;Control&gt;f</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkShortcut">
+                    <property name="action">action(win.show_history)</property>
+                    <property name="trigger">&lt;Control&gt;r</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwNavigationPage">
+            <property name="child">
+              <object class="AdwToolbarView" id="page_find_view">
+                <property name="content">
+                  <object class="AdwPreferencesPage">
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <child>
+                          <object class="AdwPreferencesRow">
+                            <property name="margin-bottom">6</property>
+                            <property name="margin-end">6</property>
+                            <property name="margin-start">6</property>
+                            <property name="margin-top">4</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkTextView">
+                                <property name="buffer">
+                                  <object class="GtkTextBuffer">
+                                    <property name="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</property>
+                                  </object>
+                                </property>
+                                <property name="hexpand">True</property>
+                                <property name="wrap-mode">word-char</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="direction">none</property>
+                        <property name="halign">end</property>
+                        <property name="has-frame">False</property>
+                        <property name="popover">
+                          <object class="GtkPopoverMenu">
+                            <property name="menu-model">page_find_menu</property>
+                          </object>
+                        </property>
+                        <property name="primary">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="bottom">
+                  <object class="GtkBox">
+                    <property name="css-classes">toolbar</property>
+                    <property name="hexpand">True</property>
+                    <child>
+                      <object class="GtkSearchEntry" id="page_find_entry">
+                        <property name="focusable">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="placeholder-text">Search text in results</property>
+                        <signal name="activate" handler="on_page_find_activate"/>
+                        <signal name="stop-search" handler="on_page_find_stop"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="prev_button">
+                        <property name="action-name">win.prev_match</property>
+                        <property name="icon-name">go-up-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="next_button">
+                        <property name="action-name">win.next_match</property>
+                        <property name="icon-name">go-down-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="tag">page-find</property>
+            <property name="title">Find in page</property>
+            <child>
+              <object class="GtkShortcutController">
+                <child>
+                  <object class="GtkShortcut">
+                    <property name="action">action(win.next_match)</property>
+                    <property name="trigger">F3</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkShortcut">
+                    <property name="action">action(win.prev_match)</property>
+                    <property name="trigger">&lt;Shift&gt;F3</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwNavigationPage">
+            <property name="child">
+              <object class="AdwToolbarView" id="history_view">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="direction">none</property>
+                        <property name="halign">end</property>
+                        <property name="has-frame">False</property>
+                        <property name="popover">
+                          <object class="GtkPopoverMenu">
+                            <property name="menu-model">history_menu</property>
+                          </object>
+                        </property>
+                        <property name="primary">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="tag">history</property>
+            <property name="title">History</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkShortcutController">
+        <child>
+          <object class="GtkShortcut">
+            <property name="action">action(win.quit)</property>
+            <property name="trigger">&lt;Control&gt;q</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+  <menu id="main_menu">
+    <item>
+      <attribute name="action">win.page_find</attribute>
+      <attribute name="label">_Find in page</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.search_clipboard</attribute>
+      <attribute name="label">_Search clipboard</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.show_history</attribute>
+      <attribute name="label">_History</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.import_dictionaries</attribute>
+      <attribute name="label">_Import dictionaries</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.quit</attribute>
+      <attribute name="label">_Quit</attribute>
+    </item>
+  </menu>
+  <menu id="page_find_menu">
+    <item>
+      <attribute name="action">win.next_match</attribute>
+      <attribute name="label">_Next match</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.prev_match</attribute>
+      <attribute name="label">_Previous match</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.quit</attribute>
+      <attribute name="label">_Quit</attribute>
+    </item>
+  </menu>
+  <menu id="history_menu">
+    <item>
+      <attribute name="action">win.clear_history</attribute>
+      <attribute name="label">Cle_ar history</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.clear_old_history</attribute>
+      <attribute name="label">_Clear old history</attribute>
+    </item>
+  </menu>
+</interface>

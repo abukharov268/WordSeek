@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Word Seek Dictionary
+Exec=word_seek
+Type=Application
+Icon=io.github.abukharov268.WordSeek
+Categories=Office;Dictionary;

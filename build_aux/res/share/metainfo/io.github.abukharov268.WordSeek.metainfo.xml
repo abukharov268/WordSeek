@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop-application">
+  <id>io.github.abukharov268.WordSeek</id>
+  <launchable type="desktop-id">io.github.abukharov268.WordSeek.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Word Seek Dictionary</name>
+  <summary>Word Seek Dictionary</summary>
+  <developer id="io.github.abukharov268">
+    <name>Alexey Bukharov</name>
+  </developer>
+  <description>
+    <p>A simple dictionary of words with StarDict support</p>
+  </description>
+  <categories>
+    <category>Office</category>
+    <category>Education</category>
+  </categories>
+  <icon type="stock">io.github.abukharov268.WordSeek</icon>
+</component>

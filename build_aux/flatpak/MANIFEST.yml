@@ -1,0 +1,39 @@
+id: io.github.abukharov268.WordSeek
+runtime: org.gnome.Platform
+runtime-version: '48'
+sdk: org.gnome.Sdk
+command: word_seek
+modules:
+  - ../../build/python-build-requirements.json
+  - ../../build/python-requirements.json
+  - name: word_seek
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 start.sh /app/bin/word_seek
+      - mkdir -p /app/lib/word_seek/
+      - cp -r aiostardict /app/lib/word_seek/aiostardict
+      - cp -r word_seek /app/lib/word_seek/word_seek
+      - cp -r gnome_word_seek /app/lib/word_seek/gnome_word_seek
+      - cp -r res/share /app/share/
+    sources:
+      - type: dir
+        path: ../res
+        dest: res
+      - type: dir
+        path: ../../aiostardict
+        dest: aiostardict
+      - type: dir
+        path: ../../word_seek
+        dest: word_seek
+      - type: dir
+        path: ../../gnome_word_seek
+        dest: gnome_word_seek
+      - type: script
+        dest-filename: start.sh
+        commands:
+          - export PYTHONPATH=/app/lib/word_seek/
+          - python3 -X pycache_prefix=~/.pycache -m gnome_word_seek
+finish-args:
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri

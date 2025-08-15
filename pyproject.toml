@@ -1,0 +1,62 @@
+[tool.poetry]
+name = "word-seek"
+version = "0.1.0"
+description = ""
+license = "MIT"
+authors = ["abukharov268 <bukharov.268@gmail.com>"]
+
+[tool.poetry.scripts]
+cli = "word_seek.cli.app:App"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiosqlite = "^0.21.0"
+appdirs = "^1.4.4"
+curtsies = "^0.4.2"
+async-lru = "^1.0.3"
+anyio = "^3.6.1"
+sqlalchemy = {version = "^2.0.36", extras = ["asyncio,mypy"]}
+reactivex = "^4.0.4"
+typer = "^0.12.5"
+rich = "^13.9.2"
+greenlet = "^3.1.1"
+beautifulsoup4 = "^4.13.3"
+webcolors = "^24.11.1"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.4"
+mypy = "^1.14.0"
+pytest-mock = "^3.14.0"
+appdirs-stubs = "^0.1.0"
+pytest = "^8.3.4"
+pytest-aio = "^1.9.0"
+pytest-randomly = "^3.16.0"
+polyfactory = "^2.19.0"
+requirements-parser = "^0.13.0"
+
+[tool.poetry.group.gnome.dependencies]
+pygobject = "^3.52.3"
+
+[tool.poetry.group.gnome-dev.dependencies]
+pygobject-stubs = "^2.12.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[mypy]
+mypy_path = "./typings"
+
+[tool.mypy]
+exclude = "^(build|build_aux)/.*"
+
+[[tool.mypy.overrides]]
+module = ["webcolors"]
+ignore_missing_imports = true
+
+[tool.ruff]
+extend-exclude = ["build_aux/flatpak-builder-tools/**"]
+
+[tool.pytest.ini_options]
+addopts = "--ignore=build_aux/ --ignore=build/"
+
