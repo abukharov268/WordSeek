@@ -2,6 +2,7 @@
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
 <!-- Created with Cambalache 0.96.1 -->
 <cambalache-project version="0.96.0" target_tk="gtk-4.0">
-  <ui template-class="main_window" filename="window.ui" sha256="6e479a14b4d21c1408e3f29bbed35137b194bb52772faf41e5501d5158dd4a8a"/>
+  <ui template-class="main_window" filename="window.ui" sha256="cd8bf0d00592607b872b9dd510ebd498125c4f06ea6c6641808a22f7c21f9e1d"/>
   <ui template-class="import_dialog" filename="import_dialog.ui" sha256="805a48b29eccc4dfcb304c52539ea9a8c82cc355c95d1465d28343f356c705ae"/>
+  <ui template-class="dictionaries_page" filename="dictionaries_page.ui" sha256="e26bafee4a0c597ff96ea9738fc83fad225d78999dc39068d6d08fee66eced45"/>
 </cambalache-project>

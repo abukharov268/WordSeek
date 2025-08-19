@@ -2,6 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import delete, select
 from sqlalchemy.sql import Delete, Select, Update
+from sqlalchemy.sql.expression import null
 
 from ..utils.models import range_lim
 from ..utils.orm import sqlite
@@ -26,11 +27,18 @@ def find_phrase(phrase: str, limit: int = 16, offset: int = 0) -> Query[Phrase]:
 
 
 def find_articles(phrase: Phrase) -> Query[Article]:
-    return select(Article).where(Article.phrase_id == phrase.id)
+    return (
+        select(Article)
+        .join(Dictionary)
+        .where(Article.phrase_id == phrase.id)
+        .order_by(Dictionary.sort_order == null(), Dictionary.sort_order)
+    )
 
 
 def list_dicts() -> Query[Dictionary]:
-    return select(Dictionary)
+    return select(Dictionary).order_by(
+        Dictionary.sort_order == null(), Dictionary.sort_order
+    )
 
 
 def list_view_logs(limit: int = 16, offset: int = 0) -> Query[ViewLog]:

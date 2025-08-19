@@ -22,6 +22,7 @@ class Dictionary(Base):
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
     title: Mapped[str]
     checksum: Mapped[str]
+    sort_order: Mapped[int | None] = mapped_column(default=None)
 
 
 class Phrase(Base):

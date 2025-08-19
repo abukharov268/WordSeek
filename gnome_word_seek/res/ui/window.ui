@@ -104,6 +104,12 @@
                     <property name="trigger">&lt;Control&gt;r</property>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkShortcut">
+                    <property name="action">action(win.edit_dictionaries)</property>
+                    <property name="trigger">&lt;Control&gt;d</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -262,6 +268,10 @@
     <item>
       <attribute name="action">win.import_dictionaries</attribute>
       <attribute name="label">_Import dictionaries</attribute>
+    </item>
+    <item>
+      <attribute name="action">win.edit_dictionaries</attribute>
+      <attribute name="label">_Dictionaries</attribute>
     </item>
     <item>
       <attribute name="action">win.quit</attribute>

@@ -14,6 +14,7 @@ from word_seek.db.models import ViewLog
 
 from . import res
 from .components.history import HistoryPage
+from .components.dicts import DictionariesPage
 from .components.imports import ImportDialog
 from .components.page import ArticlesPage
 from .components.suggestion import SuggestPopup
@@ -70,6 +71,9 @@ class MainWindow(Adw.ApplicationWindow):
 
         self.import_dialog = ImportDialog(self)
 
+        self.dictionaries_page = DictionariesPage()
+        self.nav_view.add(self.dictionaries_page)
+
         self.suggest_popup = SuggestPopup(self.search_entry, self)
         self.suggest_popup.connect("selected", self.on_phrase_selected)
 
@@ -110,6 +114,10 @@ class MainWindow(Adw.ApplicationWindow):
         import_dict_act = Gio.SimpleAction(name="import_dictionaries", enabled=True)
         import_dict_act.connect("activate", self.import_dialog.start_import)
         self.add_action(import_dict_act)
+
+        edit_dictionaries_act = Gio.SimpleAction(name="edit_dictionaries", enabled=True)
+        edit_dictionaries_act.connect("activate", self.on_edit_dictionaries)
+        self.add_action(edit_dictionaries_act)
 
         quit_act = Gio.SimpleAction(name="quit", enabled=True)
         quit_act.connect("activate", self.quit_app)
@@ -264,6 +272,10 @@ class MainWindow(Adw.ApplicationWindow):
         else:
             self.main_view_content_clear()
             self.main_view.set_content(self.no_result_page)
+
+    def on_edit_dictionaries(self, *args) -> None:
+        self.nav_view.push_by_tag("dictionaries")
+        self.dictionaries_page.load()
 
 
 class Application(Adw.Application):

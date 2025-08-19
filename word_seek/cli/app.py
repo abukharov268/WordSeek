@@ -6,8 +6,10 @@ import typer
 from . import commands as cmd
 
 history_app = typer.Typer()
+dicts_app = typer.Typer()
 app = typer.Typer()
 app.add_typer(history_app, name="history")
+app.add_typer(dicts_app, name="dicts")
 
 
 @app.command()
@@ -40,3 +42,13 @@ def clear():
 @history_app.command()
 def flush():
     asyncio.run(cmd.flush_history())
+
+
+@dicts_app.command()
+def list():
+    asyncio.run(cmd.list_dicts())
+
+
+@dicts_app.command()
+def sort(id: int, order: int):
+    asyncio.run(cmd.sort_dict(id, order))

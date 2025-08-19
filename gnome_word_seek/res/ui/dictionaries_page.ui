@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
+<interface>
+  <!-- interface-name dictionaries_page.ui -->
+  <requires lib="gio" version="2.0"/>
+  <requires lib="gtk" version="4.18"/>
+  <requires lib="libadwaita" version="1.4"/>
+  <template class="dictionaries_page" parent="AdwNavigationPage">
+    <property name="child">
+      <object class="AdwToolbarView" id="dict_view">
+        <property name="content">
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup" id="dict_row_group"/>
+            </child>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="direction">none</property>
+                <property name="halign">end</property>
+                <property name="has-frame">False</property>
+                <property name="popover">
+                  <object class="GtkPopoverMenu">
+                    <property name="menu-model">dictionaries_menu</property>
+                  </object>
+                </property>
+                <property name="primary">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="bottom">
+          <object class="GtkBox">
+            <property name="css-classes">toolbar</property>
+            <property name="hexpand">True</property>
+            <property name="homogeneous">True</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkBox">
+                <property name="halign">start</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">Sort order</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="dict_sort_entry">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="lower">1.0</property>
+                        <property name="page-increment">10.0</property>
+                        <property name="page-size">10.0</property>
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">10000.0</property>
+                      </object>
+                    </property>
+                    <property name="climb-rate">1.0</property>
+                    <property name="numeric">True</property>
+                    <property name="snap-to-ticks">True</property>
+                    <property name="text">1</property>
+                    <property name="update-policy">if-valid</property>
+                    <property name="value">1.0</property>
+                    <property name="wrap">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="halign">end</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkButton" id="dict_edit_apply_btn">
+                    <property name="label">Apply</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="dict_edit_cancel_btn">
+                    <property name="label">Cancel</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+    <property name="tag">dictionaries</property>
+    <property name="title">Dictionaries</property>
+  </template>
+  <menu id="dictionaries_menu">
+    <item>
+      <attribute name="action">win.quit</attribute>
+      <attribute name="label">_Quit</attribute>
+    </item>
+  </menu>
+</interface>
