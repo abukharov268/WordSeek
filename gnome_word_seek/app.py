@@ -1,20 +1,20 @@
 import asyncio
 import sys
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from importlib import resources
 
-import typer
 import gi
 import gi.events
+import typer
 
 import word_seek.cli.app
 from word_seek.db import repo
-from word_seek.db.config import ensure_db
+from word_seek.db.config import APP_ID, ensure_db
 from word_seek.db.models import ViewLog
 
 from . import res
-from .components.history import HistoryPage
 from .components.dicts import DictionariesPage
+from .components.history import HistoryPage
 from .components.imports import ImportDialog
 from .components.page import ArticlesPage
 from .components.suggestion import SuggestPopup
@@ -30,9 +30,6 @@ try:
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
     sys.exit(1)
-
-
-APP_ID = "io.github.abukharov268.WordSeek"
 
 
 def create_welcome_page() -> Adw.StatusPage:

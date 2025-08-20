@@ -9,8 +9,9 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from .models import Base
 
-_AUTHOR = "abukharov268"
-_DATA_PATH = PurePath(user_data_dir("word_seek", _AUTHOR))
+_AUTHOR = "io.github.abukharov268"
+APP_ID = f"{_AUTHOR}.WordSeek"
+_DATA_PATH = PurePath(user_data_dir(APP_ID, _AUTHOR))
 DB_PATH: Final = _DATA_PATH.joinpath("database.db")
 _db_initialized = False
 
