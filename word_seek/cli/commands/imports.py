@@ -3,7 +3,7 @@ from pathlib import Path
 from rich import markup
 from rich.progress import Progress
 
-from ...db.config import ensure_db
+from ...db.scaffold import ensure_db
 from ...importer import ImportProgress, ProgressCategory, bulk_import
 
 

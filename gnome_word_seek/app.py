@@ -9,8 +9,9 @@ import typer
 
 import word_seek.cli.app
 from word_seek.db import repo
-from word_seek.db.config import APP_ID, ensure_db
+from word_seek.db.config import APP_ID
 from word_seek.db.models import ViewLog
+from word_seek.db.scaffold import ensure_db
 
 from . import res
 from .components.dicts import DictionariesPage

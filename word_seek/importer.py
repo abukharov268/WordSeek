@@ -10,7 +10,7 @@ from aiostardict import StarDictFileCollection
 from aiostardict.models import StarDictFiles, EntryDataType, IdxEntry, DictEntry
 
 from .db import repo
-from .db.config import new_session
+from .db.exec import new_session
 from .db.imports import import_dictionary
 from .db.models import ArticleImportItem, Dictionary, ArticleFormat
 from .utils.collections import aio_count

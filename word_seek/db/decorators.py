@@ -2,10 +2,10 @@ from collections.abc import AsyncIterable, Awaitable, Callable
 from functools import wraps
 from typing import Concatenate
 
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import DatabaseError, OperationalError
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from .config import new_session
+from .exec import new_session
 
 
 class transact[**P, Res]:

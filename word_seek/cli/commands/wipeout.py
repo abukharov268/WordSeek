@@ -1,6 +1,6 @@
 from rich.prompt import Confirm
 
-from ...db.config import wipeout
+from ...db.scaffold import wipeout
 
 
 async def wipeout_db() -> None:
