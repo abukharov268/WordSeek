@@ -11,7 +11,6 @@ cli = "word_seek.cli.app:App"
 [tool.poetry.dependencies]
 python = "^3.12"
 aiosqlite = "^0.21.0"
-appdirs = "^1.4.4"
 curtsies = "^0.4.2"
 async-lru = "^1.0.3"
 anyio = "^3.6.1"
@@ -22,6 +21,7 @@ rich = "^13.9.2"
 greenlet = "^3.1.1"
 beautifulsoup4 = "^4.13.3"
 webcolors = "^24.11.1"
+platformdirs = "^4.3.8"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"

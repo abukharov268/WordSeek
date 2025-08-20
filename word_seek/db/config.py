@@ -3,14 +3,14 @@ from functools import partial
 from pathlib import PurePath
 from typing import Final
 
-import appdirs
 from anyio import Path, to_thread
+from platformdirs import user_data_dir
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from .models import Base
 
 _AUTHOR = "abukharov268"
-_DATA_PATH = PurePath(appdirs.user_data_dir("word_seek", _AUTHOR))
+_DATA_PATH = PurePath(user_data_dir("word_seek", _AUTHOR))
 DB_PATH: Final = _DATA_PATH.joinpath("database.db")
 _db_initialized = False
 
