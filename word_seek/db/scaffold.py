@@ -4,8 +4,7 @@ from functools import partial
 from anyio import Path, to_thread
 
 from .config import get_db_path
-from .exec import engine
-from .models import Base
+from .migrating import run_async_upgrade
 
 _db_initialized = False
 
@@ -26,8 +25,5 @@ async def ensure_db() -> None:
 
     if not _db_initialized:
         await _ensure_dir()
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
-            await conn.commit()
-
+        await run_async_upgrade()
         _db_initialized = True

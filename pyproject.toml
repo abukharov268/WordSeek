@@ -22,6 +22,7 @@ greenlet = "^3.1.1"
 beautifulsoup4 = "^4.13.3"
 webcolors = "^24.11.1"
 platformdirs = "^4.3.8"
+alembic = "^1.16.4"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"
