@@ -4,7 +4,6 @@ runtime-version: '48'
 sdk: org.gnome.Sdk
 command: word_seek
 modules:
-  - ../../build/python-build-requirements.json
   - ../../build/python-requirements.json
   - name: word_seek
     buildsystem: simple
@@ -20,13 +19,13 @@ modules:
         path: ../res
         dest: res
       - type: dir
-        path: ../../aiostardict
+        path: ../../src/aiostardict
         dest: aiostardict
       - type: dir
-        path: ../../word_seek
+        path: ../../src/word_seek
         dest: word_seek
       - type: dir
-        path: ../../gnome_word_seek
+        path: ../../src/gnome_word_seek
         dest: gnome_word_seek
       - type: script
         dest-filename: start.sh
