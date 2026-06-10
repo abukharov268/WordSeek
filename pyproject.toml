@@ -25,6 +25,7 @@ dependencies = [
     "webcolors>=24.11.1,<25",
     "platformdirs>=4.3.8,<5",
     "alembic>=1.16.4,<2",
+    "sqlite-icu>=1.0",
 ]
 
 [project.scripts]
@@ -41,6 +42,7 @@ dev = [
     "polyfactory>=2.19.0",
     "requirements-parser>=0.13.0",
     "ruff>=0.15.16",
+    "faker>=40.21.0",
 ]
 gnome = [
     "pygobject>=3.52.3,<4",

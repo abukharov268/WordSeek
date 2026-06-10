@@ -848,6 +848,18 @@ mypy = [
 ]
 
 [[package]]
+name = "sqlite-icu"
+version = "1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/24/77/47ef08dd0ee9c81a27e7c968dd69b9c0a95fb46d7429a6483a6fe4f885f2/sqlite-icu-1.0.tar.gz", hash = "sha256:973caf41f31672fed7c805327c1d587636f8d8cbc7f6e5486ec94d6917036edd", size = 8044, upload-time = "2021-11-13T17:28:52.98Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e7/6b/102d642e066e7938058ac1758cedc8f9ab7823108d7046a14006d8dc9ebb/sqlite_icu-1.0-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:a7ee8304603c8eb9a0bb7249ac97e3ba616d9ca6f698af734af4c812e47e7aec", size = 9929058, upload-time = "2024-11-06T08:20:18.146Z" },
+    { url = "https://files.pythonhosted.org/packages/70/b7/64c356a8399ee9b154e6fb697af2c388dde3a00def0b387ee5afc828cb92/sqlite_icu-1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:85056a4f9fe553d179a583a78c7ff424c05674554e99a26fd16efc7439e99fa6", size = 9887492, upload-time = "2024-11-06T08:20:22.533Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/ca/397e328ec82e8f70fa62ce0d2978efacb4e450d014dead01a36b3986effe/sqlite_icu-1.0-cp313-cp313-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:87b33d3e255e194b04b538e2bbac5fa30a1efe1ee2961083df3e6fe6e4aef581", size = 9929061, upload-time = "2024-11-06T08:20:27.152Z" },
+    { url = "https://files.pythonhosted.org/packages/38/1e/979753cc0d17f7c04bc8d490d85418b0c77a38c1dad69553be995553a7ef/sqlite_icu-1.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9d2a7b36d9f283a7382d50d2623162bfb2a8f8c46bfbc6b4726242d9a1b42ed4", size = 9887493, upload-time = "2024-11-06T08:20:31.748Z" },
+]
+
+[[package]]
 name = "typer"
 version = "0.12.5"
 source = { registry = "https://pypi.org/simple" }
@@ -914,6 +926,7 @@ dependencies = [
     { name = "reactivex" },
     { name = "rich" },
     { name = "sqlalchemy", extra = ["asyncio", "mypy"] },
+    { name = "sqlite-icu" },
     { name = "typer" },
     { name = "webcolors" },
 ]
@@ -921,6 +934,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "appdirs-stubs" },
+    { name = "faker" },
     { name = "mypy" },
     { name = "polyfactory" },
     { name = "pytest" },
@@ -951,6 +965,7 @@ requires-dist = [
     { name = "reactivex", specifier = ">=4.0.4,<5" },
     { name = "rich", specifier = ">=13.9.2,<14" },
     { name = "sqlalchemy", extras = ["asyncio", "mypy"], specifier = ">=2.0.36,<3" },
+    { name = "sqlite-icu", specifier = ">=1.0" },
     { name = "typer", specifier = ">=0.12.5,<0.13" },
     { name = "webcolors", specifier = ">=24.11.1,<25" },
 ]
@@ -958,6 +973,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "appdirs-stubs", specifier = ">=0.1.0" },
+    { name = "faker", specifier = ">=40.21.0" },
     { name = "mypy", specifier = ">=1.14.0" },
     { name = "polyfactory", specifier = ">=2.19.0" },
     { name = "pytest", specifier = ">=9.0.3" },

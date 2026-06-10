@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import delete, select
 from sqlalchemy.sql import Delete, Select, Update
-from sqlalchemy.sql.expression import null
+from sqlalchemy.sql.expression import func, null
 
 from ..utils.models import range_lim
 from ..utils.orm import sqlite
@@ -19,8 +19,16 @@ def find_checksum(checksum: str) -> Query[Dictionary]:
 def find_phrase(phrase: str, limit: int = 16, offset: int = 0) -> Query[Phrase]:
     return (
         select(Phrase)
-        .where(sqlite.instr(Phrase.text, phrase) > 0)
-        .order_by(sqlite.instr(Phrase.text, phrase), Phrase.text)
+        .where(sqlite.instr(func.lower(Phrase.text), func.lower(phrase)) > 0)
+        .order_by(
+            func.length(Phrase.text),
+            func.ifnull(
+                func.nullif(sqlite.instr(Phrase.text, phrase), 0),
+                func.length(Phrase.text),
+            ),
+            sqlite.instr(func.lower(Phrase.text), func.lower(phrase)),
+            Phrase.text,
+        )
         .offset(offset)
         .limit(limit)
     )

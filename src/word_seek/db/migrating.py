@@ -17,7 +17,7 @@ async def run_async_upgrade() -> None:
         config = Config(config_path)
     config.set_main_option("sqlalchemy.url", get_db_connection_url())
 
-    async with engine.begin() as conn:
+    async with engine().begin() as conn:
         await conn.run_sync(_run_upgrade, config)
 
 

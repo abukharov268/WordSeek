@@ -1,14 +1,42 @@
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from functools import cache
+
+import aiosqlite
+import sqlalchemy.event
+import sqlite_icu
+from sqlalchemy import AdaptedConnection
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+from sqlalchemy.pool import ConnectionPoolEntry
+from sqlalchemy.util.concurrency import await_only
 
 from .config import get_db_connection_url
 from .models import Base
 from .queries import ModifyQuery, Query
 
-engine = create_async_engine(get_db_connection_url(), echo=False, future=True)
+
+@cache
+def engine() -> AsyncEngine:
+    engine = create_async_engine(get_db_connection_url(), echo=False, future=True)
+
+    async def load_extensions(connection: aiosqlite.Connection) -> None:
+        await connection.enable_load_extension(True)
+        await connection.load_extension(sqlite_icu.extension_path().replace(".so", ""))
+
+    @sqlalchemy.event.listens_for(engine.sync_engine, "connect")
+    def _config_sqlite(
+        dbapi_connection: AdaptedConnection, connection_record: ConnectionPoolEntry
+    ) -> None:
+        await_only(load_extensions(dbapi_connection.driver_connection))
+
+    return engine
 
 
 def new_session() -> AsyncSession:
-    return async_sessionmaker(engine)()
+    return async_sessionmaker(engine())()
 
 
 async def scalar[T: Base](session: AsyncSession, query: Query[T]) -> T | None:
