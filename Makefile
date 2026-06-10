@@ -20,7 +20,8 @@ gnome-sdk:
 ./build/python-requirements.json: ./build/requirements.txt
 	python ./build_aux/flatpak-builder-tools/pip/flatpak-pip-generator.py\
 		--build-isolation \
-		--prefer-wheels=greenlet,cwcwidth,librt \
+		--wheel-arches=x86_64 \
+		--prefer-wheels=greenlet,cwcwidth,librt,ast-serialize,sqlite-icu \
 		--ignore-installed=pygments \
 		--runtime=org.gnome.Sdk//48 \
 		--requirements-file=./build/requirements.txt \
