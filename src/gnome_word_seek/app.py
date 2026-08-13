@@ -257,8 +257,10 @@ class MainWindow(Adw.ApplicationWindow):
 
     async def search(self, term: str) -> None:
         found = await repo.find_phrases(term, 1)
-        if found and found[0].text.strip() == term.strip():
+        if found and found[0].text.strip():
             phrase = found[0]
+            if self.search_entry.get_text() != phrase.text:
+                self.set_search_entry_uncompleted(phrase.text)
             articles = await repo.find_articles(phrase)
             self.main_view_content_clear()
             self.main_view.set_content(self.page)
