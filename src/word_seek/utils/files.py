@@ -9,7 +9,7 @@ async def checksum_file(file_path: str) -> str:
     checksum = hashlib.md5()
 
     async with await anyio.open_file(file_path, "rb") as file:
-        chunk = await file.read(CHECKSUM_CHUNK_SIZE)
-        checksum.update(chunk)
+        while chunk := await file.read(CHECKSUM_CHUNK_SIZE):
+            checksum.update(chunk)
 
     return checksum.hexdigest()
