@@ -1,10 +1,9 @@
-from collections.abc import Mapping
+import warnings
 from collections import deque
+from collections.abc import Mapping
 
 from bs4 import BeautifulSoup, XMLParsedAsHTMLWarning
 from bs4.element import NavigableString, Tag
-
-import warnings
 
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
 

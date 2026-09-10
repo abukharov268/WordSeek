@@ -1,18 +1,18 @@
+from collections.abc import AsyncIterable
 from dataclasses import dataclass
 from enum import StrEnum
 from os import PathLike
-from collections.abc import AsyncIterable
 
 from anyio import Path
 
 import aiostardict
 from aiostardict import StarDictFileCollection
-from aiostardict.models import StarDictFiles, EntryDataType, IdxEntry, DictEntry
+from aiostardict.models import DictEntry, EntryDataType, IdxEntry, StarDictFiles
 
 from .db import repo
 from .db.exec import new_session
 from .db.imports import import_dictionary
-from .db.models import ArticleImportItem, Dictionary, ArticleFormat
+from .db.models import ArticleFormat, ArticleImportItem, Dictionary
 from .utils.collections import aio_count
 from .utils.files import checksum_file
 

@@ -1,6 +1,7 @@
 import asyncio
-from async_lru import alru_cache
 from dataclasses import dataclass
+
+from async_lru import alru_cache
 from reactivex import Observable
 from reactivex import operators as op
 

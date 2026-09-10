@@ -10,8 +10,6 @@ from typing import AsyncIterable, Sequence
 import anyio
 from anyio import AsyncFile
 
-from ._ifo import parse_entry_type
-
 from ..errors import StarDictError
 from ..models import (
     DictEntry,
@@ -23,6 +21,7 @@ from ..models import (
     OperatingSystemType,
     RandomAccessInfo,
 )
+from ._ifo import parse_entry_type
 
 
 async def read_dz_info(file_path: str | PathLike[str]) -> DzInfo:

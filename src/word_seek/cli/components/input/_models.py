@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 
-
 SUGGEST_ROWS = 5
 
 

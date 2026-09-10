@@ -1,6 +1,5 @@
 from .models import KeyEvent
 
-
 ENTER = KeyEvent("<Ctrl-j>")
 SPACE = KeyEvent("<SPACE>")
 BACKSPACE = KeyEvent("<BACKSPACE>")

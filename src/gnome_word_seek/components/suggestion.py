@@ -1,9 +1,12 @@
+import gi
 from reactivex import Subject
 from reactivex.scheduler.mainloop import GtkScheduler
-from word_seek.eventsrc.autocomplete import create_autocomplete
-from word_seek.eventsrc.autocomplete import FoundPhrases, PhrasesQuery
 
-import gi
+from word_seek.eventsrc.autocomplete import (
+    FoundPhrases,
+    PhrasesQuery,
+    create_autocomplete,
+)
 
 try:
     gi.require_version("GObject", "2.0")
@@ -11,7 +14,7 @@ try:
     gi.require_version("Gdk", "4.0")
     gi.require_version("Gtk", "4.0")
 
-    from gi.repository import Gdk, Gtk, GLib, GObject
+    from gi.repository import Gdk, GLib, GObject, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
     exit(1)

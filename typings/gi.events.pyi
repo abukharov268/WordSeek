@@ -1,4 +1,4 @@
-from asyncio import AbstractEventLoopPolicy, AbstractChildWatcher, AbstractEventLoop
+from asyncio import AbstractChildWatcher, AbstractEventLoop, AbstractEventLoopPolicy
 
 class GLibEventLoopPolicy(AbstractEventLoopPolicy):
     def get_child_watcher(self) -> AbstractChildWatcher: ...

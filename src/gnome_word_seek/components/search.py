@@ -1,6 +1,6 @@
-from typing import Self
-from collections.abc import Callable
 import itertools
+from collections.abc import Callable
+from typing import Self
 
 import gi
 

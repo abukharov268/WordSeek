@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta, timezone
+
 from curtsies.formatstring import fmtstr
 
-from ...utils.models import range_lim
-
 from ...db import repo
+from ...utils.models import range_lim
 from ..components import select_history, view
 
 

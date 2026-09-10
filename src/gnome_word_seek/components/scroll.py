@@ -1,6 +1,7 @@
-from typing import Self
-import gi
 import asyncio
+from typing import Self
+
+import gi
 
 from ..treeutil import find_near_type
 
@@ -8,7 +9,7 @@ try:
     gi.require_version("Graphene", "1.0")
     gi.require_version("Gtk", "4.0")
 
-    from gi.repository import Gtk, Graphene
+    from gi.repository import Graphene, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
     exit(1)

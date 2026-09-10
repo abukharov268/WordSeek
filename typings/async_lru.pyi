@@ -1,4 +1,4 @@
-from typing import Callable, Awaitable
+from typing import Awaitable, Callable
 
 def alru_cache[T: Awaitable, **P](
     maxsize: int = 128, typed: bool = False, *, cache_exceptions: bool = True

@@ -2,7 +2,8 @@
 
 from anyio import AsyncFile
 from pytest_mock import MockerFixture
-from aiostardict import read_info, StarDictInfo
+
+from aiostardict import StarDictInfo, read_info
 
 
 async def test_read_info(mocker: MockerFixture):

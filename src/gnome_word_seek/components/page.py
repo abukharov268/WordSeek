@@ -1,12 +1,12 @@
 import asyncio
+
 import gi
 
-
 from word_seek.db.models import Article, ArticleFormat
+
+from ..formats import xdxf
 from .scroll import Scroll
 from .search import TAG_HIGHLIGHT, TextSearchSelection
-from ..formats import xdxf
-
 
 try:
     gi.require_version("GObject", "2.0")
@@ -14,7 +14,7 @@ try:
     gi.require_version("Adw", "1")
     gi.require_version("Gtk", "4.0")
 
-    from gi.repository import Adw, GObject, Gdk, Gtk
+    from gi.repository import Adw, Gdk, GObject, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
     exit(1)

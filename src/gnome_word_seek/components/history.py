@@ -1,8 +1,8 @@
 import asyncio
-from datetime import date, datetime, timezone
-from itertools import groupby
-from functools import partial
 from collections import OrderedDict
+from datetime import date, datetime, timezone
+from functools import partial
+from itertools import groupby
 
 import gi
 

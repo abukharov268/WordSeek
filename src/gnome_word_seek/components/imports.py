@@ -8,15 +8,15 @@ from word_seek import importer
 from word_seek.importer import ProgressCategory
 
 from .. import res
-from ..typings import preserve_type_decorator
 from ..gasync import wait_gasync
+from ..typings import preserve_type_decorator
 
 try:
     gi.require_version("GLib", "2.0")
     gi.require_version("Gtk", "4.0")
     gi.require_version("Adw", "1")
 
-    from gi.repository import Adw, Gtk, GLib
+    from gi.repository import Adw, GLib, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
     sys.exit(1)

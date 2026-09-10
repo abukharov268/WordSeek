@@ -9,14 +9,13 @@ from curtsies.window import CursorAwareWindow
 from ....eventsrc.autocomplete import FoundPhrases, PhrasesQuery, create_autocomplete
 from ....eventsrc.input import (
     InputEvent,
+    InputScope,
     KeyEvent,
     PasteEvent,
     SigIntEvent,
-    InputScope,
     keys,
 )
 from ....rxutil import till_complete_async
-
 from . import _rendering as rendering
 from ._models import SUGGEST_ROWS, InputState
 

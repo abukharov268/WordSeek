@@ -1,5 +1,6 @@
 from typing import NamedTuple
-from curtsies.events import SigIntEvent, ScheduledEvent
+
+from curtsies.events import ScheduledEvent, SigIntEvent
 
 
 class KeyEvent(NamedTuple):
