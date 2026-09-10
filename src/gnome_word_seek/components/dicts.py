@@ -1,12 +1,14 @@
 import asyncio
 import sys
-from importlib import resources
+from collections.abc import Awaitable, Callable
 from functools import partial
+from importlib import resources
+from typing import Self
 
 import gi
 
-from word_seek.db.models import Dictionary
 from word_seek.db import repo
+from word_seek.db.models import Dictionary
 
 from .. import res
 from ..typings import preserve_type_decorator
@@ -66,13 +68,20 @@ class DictionariesPage(Adw.NavigationPage):
             if dct.sort_order is not None:
                 row.set_subtitle(f"№{dct.sort_order}")
 
-            btn = Gtk.Button(
+            edit_btn = Gtk.Button(
                 icon_name="document-edit-symbolic",
                 valign=Gtk.Align.CENTER,
                 vexpand=False,
             )
-            btn.connect("clicked", partial(self.show_editor, row, dct))
-            row.add_suffix(btn)
+            edit_btn.connect("clicked", partial(self.show_editor, row, dct))
+            row.add_suffix(edit_btn)
+            delete_btn = Gtk.Button(
+                icon_name="edit-delete-symbolic",
+                valign=Gtk.Align.CENTER,
+                vexpand=False,
+            )
+            delete_btn.connect("clicked", partial(self.confirm_deletion, row, dct))
+            row.add_suffix(delete_btn)
 
         for row in self.rows:
             self.dict_row_group.add(row)
@@ -87,6 +96,11 @@ class DictionariesPage(Adw.NavigationPage):
 
         self.selected_dict = dct
 
+    def confirm_deletion(self, selected_row: Adw.ActionRow, dct: Dictionary, *args) -> None:
+        selected_row.set_sensitive(False)
+        dialog = ConfirmDeletionDialog(dct, on_deleted=self.populate, on_canceled=self.deselect_rows)
+        dialog.present(self)
+
     def on_apply(self, *arg) -> None:
         if not self.selected_dict:
             return
@@ -97,3 +111,31 @@ class DictionariesPage(Adw.NavigationPage):
         await repo.sort_dict(dct, order)
 
         await self.populate()
+
+
+class ConfirmDeletionDialog(Adw.AlertDialog):
+    def __init__(self, dictinary: Dictionary, on_deleted: Callable[[], Awaitable], on_canceled: Callable[[], None]) -> None:
+        super().__init__(
+            heading="Delete Dictionary?",
+            body=f'Do you really want to delete "{dictinary.title}" and all its acticles?',
+            default_response="cancel",
+            close_response="cancel",
+        )
+        self.add_response("cancel", "_Cancel")
+        self.add_response("delete", "_Delete")
+        self.set_response_appearance("delete", Adw.ResponseAppearance.DESTRUCTIVE)
+        self.connect("response", self.on_delete)
+        self.dictionary = dictinary
+        self.on_deleted = on_deleted
+        self.on_canceled = on_canceled
+
+
+    def on_delete(self, dialog: Self, response: str, *args) -> None:
+        if response == "delete":
+            asyncio.create_task(self.delete())
+        else:
+            self.on_canceled()
+
+    async def delete(self) -> None:
+        await repo.delete_dict(self.dictionary)
+        await self.on_deleted()

@@ -34,6 +34,14 @@ def find_phrase(phrase: str, limit: int = 16, offset: int = 0) -> Query[Phrase]:
     )
 
 
+def delete_orphaned_phrases():
+    return (
+        delete(Phrase)
+        .where(~select(Article.id).where(Article.phrase_id == Phrase.id).exists())
+        .where(~select(ViewLog.id).where(ViewLog.phrase_id == Phrase.id).exists())
+    )
+
+
 def find_articles(phrase: Phrase) -> Query[Article]:
     return (
         select(Article)

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.expression import null
 
@@ -24,6 +25,11 @@ async def find_phrases(
 @transact
 async def find_articles(session: AsyncSession, phrase: Phrase) -> list[Article]:
     return await exec.scalars_list(session, queries.find_articles(phrase))
+
+
+@transact
+async def get_dict(session: AsyncSession, dictionary_id: int) -> Dictionary:
+    return await session.get_one(Dictionary, dictionary_id)
 
 
 @transact
@@ -59,6 +65,28 @@ async def sort_dict(
 
 
 @transact
+async def delete_dict(
+    session: AsyncSession, dictionary: Dictionary | int
+) -> None:
+    id = dictionary if isinstance(dictionary, int) else dictionary.id
+    target = await session.get_one(Dictionary, id)
+
+    await exec.execute(session, delete(Article).where(Article.dictionary_id == id))
+    await session.delete(target)
+    await exec.execute(session, queries.delete_orphaned_phrases())
+    await session.commit()
+
+
+@transact
+async def delete_all_dicts(session: AsyncSession
+) -> None:
+    await exec.execute(session, delete(Article))
+    await exec.execute(session, delete(Dictionary))
+    await exec.execute(session, queries.delete_orphaned_phrases())
+    await session.commit()
+
+
+@transact
 async def list_view_logs(
     session: AsyncSession, limit: int = 16, offset: int = 0
 ) -> list[ViewLog]:
@@ -81,4 +109,5 @@ async def clear_view_logs(
     await exec.execute(
         session, queries.delete_view_logs(items=items, shown_at_utc=shown_at_utc)
     )
+    await exec.execute(session, queries.delete_orphaned_phrases())
     await session.commit()

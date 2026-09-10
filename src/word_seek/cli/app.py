@@ -52,3 +52,12 @@ def list():
 @dicts_app.command()
 def sort(id: int, order: int):
     asyncio.run(cmd.sort_dict(id, order))
+
+
+@dicts_app.command()
+def delete(id: int):
+    asyncio.run(cmd.delete_dict(id))
+
+@dicts_app.command()
+def delete_all():
+    asyncio.run(cmd.delete_all_dicts())
