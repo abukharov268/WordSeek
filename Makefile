@@ -21,7 +21,7 @@ gnome-sdk:
 	python ./build_aux/flatpak-builder-tools/pip/flatpak-pip-generator.py\
 		--build-isolation \
 		--wheel-arches=x86_64 \
-		--prefer-wheels=greenlet,cwcwidth,librt,ast-serialize,sqlite-icu \
+		--prefer-wheels=greenlet,cwcwidth,librt,ast-serialize \
 		--ignore-installed=pygments \
 		--runtime=org.gnome.Sdk//48 \
 		--requirements-file=./build/requirements.txt \

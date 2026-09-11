@@ -15,7 +15,8 @@ async def _import_batch(
     session: AsyncSession, dict_id: int, batch: list[ArticleImportItem]
 ) -> None:
     p, phrase_prm = Phrase, bindparam("phrase", type_=String())
-    phrases_prms = [{"text": txt} for txt in {item.phrase for item in batch}]
+    phrases = {item.phrase: item.phrase_lower for item in batch}
+    phrases_prms = [{"text": txt, "text_lower": txt_lower} for txt, txt_lower in phrases.items()]
     prm_batch = [
         {
             "dictionary_id": dict_id,

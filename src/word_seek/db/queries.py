@@ -17,16 +17,17 @@ def find_checksum(checksum: str) -> Query[Dictionary]:
 
 
 def find_phrase(phrase: str, limit: int = 16, offset: int = 0) -> Query[Phrase]:
+    phrase_lower = phrase.lower()
     return (
         select(Phrase)
-        .where(sqlite.instr(func.lower(Phrase.text), func.lower(phrase)) > 0)
+        .where(sqlite.instr(Phrase.text_lower, phrase_lower) > 0)
         .order_by(
             func.length(Phrase.text),
             func.ifnull(
                 func.nullif(sqlite.instr(Phrase.text, phrase), 0),
                 func.length(Phrase.text),
             ),
-            sqlite.instr(func.lower(Phrase.text), func.lower(phrase)),
+            sqlite.instr(Phrase.text_lower, phrase_lower),
             Phrase.text,
         )
         .offset(offset)

@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from enum import StrEnum
 
@@ -30,6 +30,10 @@ class Phrase(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
     text: Mapped[str] = mapped_column(index=True, unique=True)
+    text_lower: Mapped[str] = mapped_column(index=True, init=False)
+
+    def __post_init__(self) -> None:
+        self.text_lower = self.text.lower()
 
 
 class ArticleFormat(StrEnum):
@@ -62,6 +66,10 @@ class ViewLog(Base):
 @dataclass
 class ArticleImportItem:
     phrase: str
+    phrase_lower: str = field(init=False)
     index: int
     format: ArticleFormat
     text: str
+
+    def __post_init__(self) -> None:
+        self.phrase_lower = self.phrase.lower()
