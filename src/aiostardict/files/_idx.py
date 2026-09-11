@@ -15,7 +15,7 @@ async def read_indexes(
     suffix_bytes = offset_bits // 8 + 4
     suffix_format = ">QL" if offset_bits == 64 else ">LL"
     index = 0
-    result = []
+    result = list[IdxEntry]()
     while True:
         if index == 0 and memory[:4] == b"\x00\x00\xb4\x97":
             index += 4  # hard-code the case of "mueller" dictionry
@@ -23,7 +23,7 @@ async def read_indexes(
         word_end = memory.find(b"\0", index)
         suffix_start = word_end + 1
         end_index = suffix_start + suffix_bytes
-        if word_end < 0 or end_index >= len(memory):
+        if word_end < 0 or end_index > len(memory):
             break
         word = str(memory_view[index:word_end], "utf-8")
         tail_memory = memory_view[suffix_start:end_index]
