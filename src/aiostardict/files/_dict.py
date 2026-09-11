@@ -158,22 +158,32 @@ async def iter_dict_entries(
 ) -> AsyncIterable[tuple[IdxEntry, list[DictEntry]]]:
     entries = sorted(indexes, key=op.attrgetter("offset"))
     idx = 0
-    if file_path.endswith(".dz"):
-        dz_info = await read_dz_info(file_path)
-    else:
-        dz_info = None
+    dz_info = await read_dz_info(file_path) if file_path.endswith(".dz") else None
 
     async with await anyio.open_file(file_path, "rb", buffering=buffer_size) as file:
-        read = _to_decommpress_reader(file) if dz_info else file.read
         if dz_info:
+            if not dz_info.random_access_info:
+                raise StarDictError("Missing random access info in .dict.dz file")
+
             await file.seek(dz_info.header_length)
+            read = _to_decommpress_reader(file, dz_info.random_access_info)
+        else:
+            read = file.read
+
         for idx in range(0, len(entries), batch_size):
             next_idx = min(idx + batch_size, len(entries))
-            raw = await read(
-                entries[next_idx].offset - entries[idx].offset
-                if next_idx < len(entries)
-                else -1
-            )
+
+            if next_idx < len(entries):
+                entry_size = entries[next_idx].offset - entries[idx].offset
+                raw = b""
+                while len(raw) < entry_size:
+                    chunk = await read(entry_size - len(raw))
+                    if not chunk:
+                        break
+                    raw += chunk
+            else:
+                raw = await read(-1)
+
             for i in range(idx, next_idx):
                 start = entries[i].offset - entries[idx].offset
                 end = start + entries[i].size
@@ -181,37 +191,40 @@ async def iter_dict_entries(
                 yield (entries[i], _parse_dict_entries(data, sametypesequence))
 
 
-def _to_decommpress_reader(file: AsyncFile[bytes]) -> Callable[[int], Awaitable[bytes]]:
+def _to_decommpress_reader(
+    file: AsyncFile[bytes], ra: RandomAccessInfo
+) -> Callable[[int], Awaitable[bytes]]:
     decommressor = zlib.decompressobj(wbits=-15)
-    buf = bytes()
     eof: bool = False
+    tail_size = 0
+    next_chunk_idx = 0
 
     async def read(size: int) -> bytes:
-        nonlocal eof, buf
-        if not eof and size > 0:
-            while len(buf) < size:
-                raw_bytes = await file.read(
-                    size - len(decommressor.unconsumed_tail) - len(buf)
-                )
-                chunk = decommressor.unconsumed_tail + raw_bytes
-                eof = eof or len(buf) + len(chunk) < size
-                buf = buf + decommressor.decompress(chunk)
-        elif size == -1:
-            while not eof:
-                raw_bytes = await file.read(-1)
-                chunk = decommressor.unconsumed_tail + raw_bytes
-                eof = eof or not chunk
-                buf = buf + decommressor.decompress(chunk)
-            raw_bytes = await file.read(-1)
-            chunk = decommressor.unconsumed_tail + raw_bytes
-            eof = True
-            buf = buf + decommressor.decompress(chunk)
+        nonlocal eof, next_chunk_idx, tail_size
+        if size > 0:
+            compressed_size = 0
+            while tail_size < size and next_chunk_idx < len(ra.compressed_chunk_lengths):
+                compressed_size += ra.compressed_chunk_lengths[next_chunk_idx]
+                tail_size += ra.chunk_length
+                next_chunk_idx += 1
 
-        if size == -1:
-            res, buf = buf, bytes()
+            chunk = b""
+            while not eof and len(chunk) < compressed_size:
+                read_bytes = await file.read(compressed_size - len(chunk))
+                eof |= not read_bytes
+                chunk += read_bytes
+            chunk = decommressor.unconsumed_tail + chunk
+            res = decommressor.decompress(chunk, size)
+            tail_size -= len(res)
+            return res
+        elif size == -1:
+            chunk = decommressor.unconsumed_tail
+            if not eof:
+                chunk += await file.read(-1)
+            eof = True
+            return decommressor.decompress(chunk)
         else:
-            res, buf = buf[:size], buf[size:]
-        return res
+            return b""
 
     return read
 
@@ -226,7 +239,7 @@ async def read_dict_entries(
     else:
         dz_info = None
 
-    result = []
+    result = list[tuple[IdxEntry, list[DictEntry]]]()
     async with await anyio.open_file(file_path, "rb") as file:
         if dz_info:
             await file.seek(dz_info.header_length)

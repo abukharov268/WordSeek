@@ -5,6 +5,7 @@ from .files._ifo import read_info
 from .files._paths import StarDictFileCollection
 from .models import (
     DzInfo,
+    EntryDataType,
     GzipExtraFlag,
     GzipFlag,
     IdxEntry,
@@ -18,6 +19,7 @@ from .models import (
 
 __all__ = [
     "DzInfo",
+    "EntryDataType",
     "GzipExtraFlag",
     "GzipFlag",
     "IdxEntry",
