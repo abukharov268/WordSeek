@@ -1,11 +1,10 @@
 import operator as op
 import zlib
 from array import array
-from collections.abc import Awaitable, Callable
+from collections.abc import AsyncIterable, Awaitable, Callable, Sequence
 from datetime import date
 from os import PathLike
 from struct import iter_unpack, unpack, unpack_from
-from typing import AsyncIterable, Sequence
 
 import anyio
 from anyio import AsyncFile
@@ -75,10 +74,11 @@ async def read_dz_info(file_path: str | PathLike[str]) -> DzInfo:
 
 async def _read_iso_8859_1(file: AsyncFile[bytes]) -> tuple[int, str]:
     str_bytes = array("B")
-    str_bytes.extend(await file.read1(1))
-    while str_bytes[-1] != 0:
-        str_bytes.extend(await file.read1(1))
-    return len(str_bytes), str(bytes(str_bytes)[:-1], "iso-8859-1")
+    read_byte = await file.read1(1)
+    while read_byte and read_byte[-1] != 0:
+        str_bytes.extend(read_byte)
+        read_byte = await file.read1(1)
+    return len(str_bytes) + len(read_byte), str(bytes(str_bytes), "iso-8859-1")
 
 
 async def _read_gzip_extra(
@@ -91,13 +91,21 @@ async def _read_gzip_extra(
         xheader, info_size = unpack("<2sH", await file.read(4))
         xbyte_count += 4 + info_size
         if xheader != b"RA":
-            await file.read(xsize)
+            await file.read(info_size)
             continue
         (xversion,) = unpack("<H", await file.read(2))
         if xversion != 1:
             raise StarDictError("Invalid random access version.")
         chunk_size, chunk_count = unpack("<HH", await file.read(4))
-        chunk_seq = iter_unpack("<H", await file.read(2 * chunk_count))
+
+        words = bytearray()
+        while len(words) < chunk_count * 2:
+            read_bytes = await file.read(chunk_count * 2 - len(words))
+            if not read_bytes:
+                break
+            words += read_bytes
+
+        chunk_seq = iter_unpack("<H", words)
         chunk_lengths = list(w for (w,) in chunk_seq)
         random_access_info = RandomAccessInfo(chunk_size, chunk_lengths)
     return xsize, random_access_info
