@@ -53,7 +53,7 @@ def upgrade() -> None:
         if not params:
             break
         last_id = max(prm["phrase_id"] for prm in params)
-        
+
         connection.execute(
             update(phrase_table)
             .where(phrase_table.c["id"] == bindparam("phrase_id"))

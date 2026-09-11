@@ -1,3 +1,4 @@
+import sys
 from collections.abc import Callable
 
 import gi
@@ -8,7 +9,7 @@ try:
     from gi.repository import Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 
 def find_near_widget(

@@ -1,3 +1,5 @@
+import sys
+
 import gi
 from reactivex import Subject
 from reactivex.scheduler.mainloop import GtkScheduler
@@ -17,7 +19,7 @@ try:
     from gi.repository import Gdk, GLib, GObject, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 
 class SuggestItemFactory(Gtk.SignalListItemFactory):

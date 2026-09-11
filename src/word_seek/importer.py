@@ -13,7 +13,7 @@ from .db import repo
 from .db.exec import new_session
 from .db.imports import import_dictionary
 from .db.models import ArticleFormat, ArticleImportItem, Dictionary
-from .utils.collections import acount, aiter_exaust
+from .utils.collections import acount
 from .utils.files import checksum_file
 
 
@@ -37,8 +37,8 @@ async def bulk_import(dir_path: str | PathLike[str]) -> AsyncIterable[ImportProg
     dir = Path(dir_path)
     stardicts = StarDictFileCollection()
     async for path in dir.glob("**/*.*"):
-        await stardicts.aappend_relevant(path) 
-        
+        await stardicts.aappend_relevant(path)
+
     stardicts = list(stardicts)
     for stard_num, stard_item in enumerate(stardicts, 1):
         name, cnt, bad_formats = await _import_item(stard_item)

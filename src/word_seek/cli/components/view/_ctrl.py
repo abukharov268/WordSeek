@@ -1,5 +1,6 @@
 import asyncio
 import os
+import sys
 
 from curtsies import fmtfuncs as fmt
 from curtsies.formatstring import FmtStr, fmtstr
@@ -58,5 +59,5 @@ async def view(articles: list[Article]) -> None:
             case KeyEvent("q") | KeyEvent("Q") | None:
                 break
             case SigIntEvent():
-                exit(0)
+                sys.exit(0)
     print()

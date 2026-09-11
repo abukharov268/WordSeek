@@ -1,4 +1,5 @@
 import itertools
+import sys
 from collections.abc import Callable
 from typing import Self
 
@@ -12,7 +13,7 @@ try:
     from gi.repository import Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 
 TAG_HIGHLIGHT = Gtk.TextTag(

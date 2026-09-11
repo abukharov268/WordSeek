@@ -1,3 +1,5 @@
+import sys
+
 import gi
 
 try:
@@ -7,7 +9,7 @@ try:
     from gi.repository import Gdk, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 
 def setup_css(css: str) -> None:

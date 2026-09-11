@@ -39,7 +39,7 @@ async def read_dz_info(file_path: str | PathLike[str]) -> DzInfo:
 
         flags = GzipFlag(flags_byte)
         extra_flags = GzipExtraFlag(extra_flags_byte)
-        modify_time = date.fromtimestamp(modify_word)
+        modify_time = date.fromtimestamp(modify_word)  # noqa: DTZ012
         os_type = OperatingSystemType(os_type_byte)
 
         xsize, random_access_info = 0, None
@@ -106,7 +106,7 @@ async def _read_gzip_extra(
             words += read_bytes
 
         chunk_seq = iter_unpack("<H", words)
-        chunk_lengths = list(w for (w,) in chunk_seq)
+        chunk_lengths = [w for (w,) in chunk_seq]
         random_access_info = RandomAccessInfo(chunk_size, chunk_lengths)
     return xsize, random_access_info
 
@@ -203,7 +203,9 @@ def _to_decommpress_reader(
         nonlocal eof, next_chunk_idx, tail_size
         if size > 0:
             compressed_size = 0
-            while tail_size < size and next_chunk_idx < len(ra.compressed_chunk_lengths):
+            while tail_size < size and next_chunk_idx < len(
+                ra.compressed_chunk_lengths
+            ):
                 compressed_size += ra.compressed_chunk_lengths[next_chunk_idx]
                 tail_size += ra.chunk_length
                 next_chunk_idx += 1

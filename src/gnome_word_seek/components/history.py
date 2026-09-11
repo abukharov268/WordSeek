@@ -1,6 +1,7 @@
 import asyncio
+import sys
 from collections import OrderedDict
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from functools import partial
 from itertools import groupby
 
@@ -18,14 +19,14 @@ try:
     from gi.repository import Adw, GObject, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 
 LOG_COUNT = 10_000
 
 
 def log_day(log: ViewLog) -> date:
-    return log.shown_at_utc.replace(tzinfo=timezone.utc).astimezone().date()
+    return log.shown_at_utc.replace(tzinfo=UTC).astimezone().date()
 
 
 class HistoryPage(Adw.PreferencesPage):

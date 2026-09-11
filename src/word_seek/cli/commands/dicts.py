@@ -24,7 +24,9 @@ async def sort_dict(dict_id: int, sort_order: int) -> None:
 
 async def delete_dict(dict_id: int) -> None:
     dictionary = await repo.get_dict(dict_id)
-    if Confirm.ask(f"Are you sure you want to DELETE {dictionary.title} ({dictionary.id})?"):
+    if Confirm.ask(
+        f"Are you sure you want to DELETE {dictionary.title} ({dictionary.id})?"
+    ):
         await repo.delete_dict(dict_id)
         print("Dictionary's deleted")
 

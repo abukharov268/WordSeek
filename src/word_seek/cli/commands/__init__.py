@@ -7,11 +7,11 @@ from .wipeout import wipeout_db
 __all__ = [
     "browse_history",
     "clear_history",
+    "delete_all_dicts",
+    "delete_dict",
     "enter_search",
     "flush_history",
     "import_dir",
-    "delete_all_dicts",
-    "delete_dict",
     "list_dicts",
     "sort_dict",
     "wipeout_db",

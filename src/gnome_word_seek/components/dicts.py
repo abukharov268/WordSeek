@@ -36,11 +36,12 @@ class DictionariesPage(Adw.NavigationPage):
     dict_sort_entry: Gtk.SpinButton = Gtk.Template.Child()  # type: ignore[misc]
     dict_edit_apply_btn: Gtk.Button = Gtk.Template.Child()  # type: ignore[misc]
     dict_edit_cancel_btn: Gtk.Button = Gtk.Template.Child()  # type: ignore[misc]
-    rows: list[Adw.PreferencesRow] = []
+    rows: list[Adw.PreferencesRow]
     selected_dict: Dictionary | None = None
 
     def __init__(self):
         super().__init__()
+        self.rows = []
         self.dict_edit_apply_btn.connect("clicked", self.on_apply)
         self.dict_edit_cancel_btn.connect("clicked", self.deselect_rows)
 
@@ -96,9 +97,13 @@ class DictionariesPage(Adw.NavigationPage):
 
         self.selected_dict = dct
 
-    def confirm_deletion(self, selected_row: Adw.ActionRow, dct: Dictionary, *args) -> None:
+    def confirm_deletion(
+        self, selected_row: Adw.ActionRow, dct: Dictionary, *args
+    ) -> None:
         selected_row.set_sensitive(False)
-        dialog = ConfirmDeletionDialog(dct, on_deleted=self.populate, on_canceled=self.deselect_rows)
+        dialog = ConfirmDeletionDialog(
+            dct, on_deleted=self.populate, on_canceled=self.deselect_rows
+        )
         dialog.present(self)
 
     def on_apply(self, *arg) -> None:
@@ -114,7 +119,12 @@ class DictionariesPage(Adw.NavigationPage):
 
 
 class ConfirmDeletionDialog(Adw.AlertDialog):
-    def __init__(self, dictinary: Dictionary, on_deleted: Callable[[], Awaitable], on_canceled: Callable[[], None]) -> None:
+    def __init__(
+        self,
+        dictinary: Dictionary,
+        on_deleted: Callable[[], Awaitable],
+        on_canceled: Callable[[], None],
+    ) -> None:
         super().__init__(
             heading="Delete Dictionary?",
             body=f'Do you really want to delete "{dictinary.title}" and all its acticles?',
@@ -128,7 +138,6 @@ class ConfirmDeletionDialog(Adw.AlertDialog):
         self.dictionary = dictinary
         self.on_deleted = on_deleted
         self.on_canceled = on_canceled
-
 
     def on_delete(self, dialog: Self, response: str, *args) -> None:
         if response == "delete":

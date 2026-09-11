@@ -32,18 +32,18 @@ COLORS = [
 
 
 STYLES: dict[str, dict[str, Any]] = {
-    "k": dict(bold=True),
-    "tr": dict(bold=True),
-    "sup": dict(fg="red", bg="gray"),
-    "sub": dict(fg="blue", bg="gray"),
-    "ex": dict(dark=True),
-    "abr": dict(fg="yellow", dark=True),
-    "co": dict(fg="gray"),
-    "kref": dict(fg="blue", underline=True),
-    "iref": dict(fg="blue", underline=True),
-    "opt": dict(fg="gray"),
-    "b": dict(bold=True),
-    "i": dict(dark=True),
+    "k": {"bold": True},
+    "tr": {"bold": True},
+    "sup": {"fg": "red", "bg": "gray"},
+    "sub": {"fg": "blue", "bg": "gray"},
+    "ex": {"dark": True},
+    "abr": {"fg": "yellow", "dark": True},
+    "co": {"fg": "gray"},
+    "kref": {"fg": "blue", "underline": True},
+    "iref": {"fg": "blue", "underline": True},
+    "opt": {"fg": "gray"},
+    "b": {"bold": True},
+    "i": {"dark": True},
 }
 
 
@@ -52,8 +52,8 @@ def render_xdxf_lines(content: str) -> list[FmtStr]:
         visitor = XdxfVisitor()
         visitor.visit(f"<root>{content}</root>")
         return visitor.lines
-    except Exception as exc:
-        logger.error("XDXF display error", exc)
+    except Exception:
+        logger.exception("XDXF display error")
         return [fmtstr(content)]
 
 
@@ -80,7 +80,7 @@ class XdxfVisitor(XmlNodeVisitor):
                         deltas.sort(key=lambda x: x[1])
                         color, _ = deltas[0]
                         combined["fg"] = color
-                    except Exception:
+                    except ValueError:
                         pass
                 super().visit_tag(tag, attrs)
             case "rref":

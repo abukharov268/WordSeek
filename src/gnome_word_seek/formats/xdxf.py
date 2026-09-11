@@ -1,4 +1,5 @@
 import logging
+import sys
 from collections.abc import Mapping
 
 import gi
@@ -14,7 +15,7 @@ try:
     from gi.repository import Gdk, Gtk, Pango
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 
 def parse_rgba(color: str) -> Gdk.RGBA:
@@ -96,8 +97,8 @@ def insert_xdxf_buffer(buffer: Gtk.TextBuffer, content: str) -> None:
     try:
         XdxfVisitor(buffer).visit(f"<root>{content}</root>")
         return
-    except Exception as exc:
-        logger.error("XDXF display error", exc)
+    except Exception:
+        logger.exception("XDXF display error")
 
     iter = buffer.get_end_iter()
     buffer.insert(iter, content)
@@ -124,7 +125,7 @@ class XdxfVisitor(XmlNodeVisitor):
                             ]
                             deltas.sort(key=lambda x: x[1])
                             t, _ = deltas[0]
-                        except Exception:
+                        except ValueError:
                             pass
                     super().visit_tag(tag, attrs)
                 case "rref":

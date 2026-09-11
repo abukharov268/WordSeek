@@ -4,10 +4,10 @@ from ._ifo import read_info
 from ._paths import StarDictFileCollection
 
 __all__ = [
-    "read_info",
-    "read_indexes",
-    "read_dz_info",
+    "StarDictFileCollection",
     "iter_dict_entries",
     "read_dict_entries",
-    "StarDictFileCollection",
+    "read_dz_info",
+    "read_indexes",
+    "read_info",
 ]

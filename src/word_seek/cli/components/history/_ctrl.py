@@ -1,4 +1,5 @@
-from datetime import timezone
+import sys
+from datetime import UTC
 from itertools import chain
 
 from curtsies.formatstring import FmtStr, fmtstr
@@ -14,7 +15,7 @@ ITEM_COUNT = 10
 def render_logs(logs: list[ViewLog], select_idx: int) -> list[FmtStr]:
     lines = list[FmtStr]()
     for idx, log in enumerate(logs):
-        date = log.shown_at_utc.replace(tzinfo=timezone.utc).astimezone()
+        date = log.shown_at_utc.replace(tzinfo=UTC).astimezone()
         line = fmtstr(date.strftime("%Y:%m:%d %H:%M:%S | "), "gray") + log.phrase.text
         lines.append(line if idx != select_idx else fmtstr(line, "invert"))
     return lines
@@ -42,7 +43,7 @@ async def select_history() -> ViewLog | None:
                 case KeyEvent("q") | KeyEvent("Q") | None:
                     return None
                 case SigIntEvent():
-                    exit(0)
+                    sys.exit(0)
             if not within_range(idx):
                 skip = max(0, skip - ITEM_COUNT) if idx < 0 else skip + ITEM_COUNT
                 logs = await repo.list_view_logs(ITEM_COUNT + 1, skip)

@@ -23,7 +23,6 @@ async def test_read_info(mocker: MockerFixture):
     mock_file.readline.side_effect = data_iter
     mock_file.readlines.return_value = data_iter
     mock_file.__aenter__.return_value = mock_file
-    mock_file.__aexit__.called
     open_mock = mocker.patch("anyio.open_file", return_value=mock_file)
 
     result = await read_info("my-file.ifo")

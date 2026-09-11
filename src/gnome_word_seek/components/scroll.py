@@ -1,4 +1,5 @@
 import asyncio
+import sys
 from typing import Self
 
 import gi
@@ -12,7 +13,7 @@ try:
     from gi.repository import Graphene, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 
 ANIMATE_RATE = 0.05

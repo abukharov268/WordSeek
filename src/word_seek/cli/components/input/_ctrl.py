@@ -1,5 +1,6 @@
 import asyncio
 import os
+import sys
 from functools import partial
 
 import reactivex as rx
@@ -111,5 +112,5 @@ async def input() -> str:
             till_complete_async(suggest_pipeline),
         )
         if state.exited:
-            exit(0)
+            sys.exit(0)
         return state.value

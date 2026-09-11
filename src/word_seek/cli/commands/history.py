@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from curtsies.formatstring import fmtstr
 
@@ -20,6 +20,6 @@ async def clear_history() -> None:
 
 
 async def flush_history() -> None:
-    end = datetime.now(timezone.utc) + timedelta(days=90)
+    end = datetime.now(UTC) + timedelta(days=90)
     await repo.clear_view_logs(shown_at_utc=range_lim(None, end))
     print(fmtstr("Old history is cleared!", fg="yellow", dark=True))

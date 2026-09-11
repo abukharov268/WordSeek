@@ -41,7 +41,7 @@ def measure_columns(
     PAD = len("  ")
     BAR = len("│")
     columns = list(collections.chunks(suggestions, SUGGEST_ROWS))
-    widths = list(max(map(len, c)) + PAD for c in columns)
+    widths = [max(map(len, c)) + PAD for c in columns]
 
     total_width = 2 * BAR
     for i, width in enumerate(widths):
@@ -52,7 +52,7 @@ def measure_columns(
             break
         total_width = new_width
 
-    padding = int(math.floor((term.columns - total_width) / len(widths)))
+    padding = math.floor((term.columns - total_width) / len(widths))
     last_padding = term.columns - total_width - padding * (len(columns) - 1)
     for i in range(len(widths) - 1):
         widths[i] += padding

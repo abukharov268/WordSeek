@@ -65,9 +65,7 @@ async def sort_dict(
 
 
 @transact
-async def delete_dict(
-    session: AsyncSession, dictionary: Dictionary | int
-) -> None:
+async def delete_dict(session: AsyncSession, dictionary: Dictionary | int) -> None:
     id = dictionary if isinstance(dictionary, int) else dictionary.id
     target = await session.get_one(Dictionary, id)
 
@@ -78,8 +76,7 @@ async def delete_dict(
 
 
 @transact
-async def delete_all_dicts(session: AsyncSession
-) -> None:
+async def delete_all_dicts(session: AsyncSession) -> None:
     await exec.execute(session, delete(Article))
     await exec.execute(session, delete(Dictionary))
     await exec.execute(session, queries.delete_orphaned_phrases())

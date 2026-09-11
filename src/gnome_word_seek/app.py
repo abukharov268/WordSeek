@@ -1,6 +1,6 @@
 import asyncio
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from importlib import resources
 
 import gi
@@ -104,7 +104,7 @@ class MainWindow(Adw.ApplicationWindow):
         history_clear_old_act.connect(
             "activate",
             lambda *args: self.history.on_delete_items(
-                before=datetime.now(timezone.utc) + timedelta(days=90)
+                before=datetime.now(UTC) + timedelta(days=90)
             ),
         )
         self.add_action(history_clear_old_act)
@@ -266,7 +266,7 @@ class MainWindow(Adw.ApplicationWindow):
             self.main_view.set_content(self.page)
             self.page.populate(articles)
 
-            time = datetime.now(timezone.utc)
+            time = datetime.now(UTC)
             log = ViewLog(phrase_id=phrase.id, shown_at_utc=time)
             await repo.update_view_log(log)
         else:

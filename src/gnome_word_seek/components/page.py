@@ -1,4 +1,5 @@
 import asyncio
+import sys
 
 import gi
 
@@ -17,7 +18,7 @@ try:
     from gi.repository import Adw, Gdk, GObject, Gtk
 except (ImportError, ValueError) as exc:
     print("Error: Dependencies not met.", exc)
-    exit(1)
+    sys.exit(1)
 
 TAG_DICT = Gtk.TextTag(
     name="base:dict_desc",
