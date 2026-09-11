@@ -5,7 +5,7 @@ from sqlalchemy import String, bindparam, select
 from sqlalchemy.dialects.sqlite import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..utils.collections import aio_chunks
+from ..utils.collections import achunks
 from .models import Article, ArticleImportItem, Dictionary, Phrase
 
 BATCH_ROWS: Final = 16384
@@ -46,6 +46,6 @@ async def import_dictionary(
 ) -> AsyncIterable[list[ArticleImportItem]]:
     session.add(dictionary)
     await session.flush()
-    async for batch in aio_chunks(articles, batch_row_count):
+    async for batch in achunks(articles, batch_row_count):
         await _import_batch(session, dictionary.id, batch)
         yield batch

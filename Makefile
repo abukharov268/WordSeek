@@ -36,3 +36,8 @@ gnome-sdk:
 
 ./build:
 	mkdir -p build
+
+
+fix-uv-sync: uv.lock
+	@echo "Remove pygobject-stubs legacy distribution .egg-info artifact for UV to use only dist-info"
+	@rm .venv/lib/python*/site-packages/PyGObject_stubs-*.egg-info || echo "Nothing to fix"

@@ -13,7 +13,7 @@ from .db import repo
 from .db.exec import new_session
 from .db.imports import import_dictionary
 from .db.models import ArticleFormat, ArticleImportItem, Dictionary
-from .utils.collections import aio_count
+from .utils.collections import acount, aiter_exaust
 from .utils.files import checksum_file
 
 
@@ -37,13 +37,13 @@ async def bulk_import(dir_path: str | PathLike[str]) -> AsyncIterable[ImportProg
     dir = Path(dir_path)
     stardicts = StarDictFileCollection()
     async for path in dir.glob("**/*.*"):
-        stardicts.filter_path_in(path)
-
-    stard_items = list(stardicts)
-    for stard_num, stard_item in enumerate(stard_items, 1):
+        await stardicts.aappend_relevant(path) 
+        
+    stardicts = list(stardicts)
+    for stard_num, stard_item in enumerate(stardicts, 1):
         name, cnt, bad_formats = await _import_item(stard_item)
         ctg, msg = _map_progess_category(cnt, bad_formats)
-        yield ImportProgress(ctg, name, len(stard_items), stard_num, msg)
+        yield ImportProgress(ctg, name, len(stardicts), stard_num, msg)
 
 
 def _map_progess_category(
@@ -99,7 +99,7 @@ async def _import_item(item: StarDictFiles) -> tuple[str, int | None, set[str]]:
     )
     articles = _map_dict_entries(dict_entries, error_formats)
     async with new_session() as session:
-        cnt = await aio_count(
+        cnt = await acount(
             import_dictionary(
                 session, Dictionary(title=ifo.bookname, checksum=checksum), articles
             )

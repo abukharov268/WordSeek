@@ -1,6 +1,8 @@
+import pathlib
 from collections import defaultdict
 from collections.abc import Iterable, Iterator
-from os import PathLike
+
+import anyio
 
 from ..models import StarDictFiles
 
@@ -28,9 +30,13 @@ class StarDictFileCollection(Iterable[StarDictFiles]):
     def __iter__(self) -> Iterator[StarDictFiles]:
         return iter(self.bundles())
 
-    def filter_path_in(self, path: str | PathLike[str]) -> bool:
-        path = str(path)
+    def append_relevant(self, path: pathlib.Path) -> bool:
+        return path.is_file() and self._append_relevant_file(str(path))
 
+    async def aappend_relevant(self, path: anyio.Path) -> bool:
+        return await path.is_file() and self._append_relevant_file(str(path))
+
+    def _append_relevant_file(self, path: str) -> bool:
         suffix = next(iter(suf for suf in SUFFIXES if path.endswith(suf)), None)
         if suffix is None:
             return False
