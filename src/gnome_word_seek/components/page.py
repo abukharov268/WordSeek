@@ -1,24 +1,11 @@
 import asyncio
-import sys
-
-import gi
 
 from word_seek.db.models import Article, ArticleFormat
 
 from ..formats import xdxf
+from ..gnome_libs import Adw, Gdk, GObject, Gtk
 from .scroll import Scroll
 from .search import TAG_HIGHLIGHT, TextSearchSelection
-
-try:
-    gi.require_version("GObject", "2.0")
-    gi.require_version("Gdk", "4.0")
-    gi.require_version("Adw", "1")
-    gi.require_version("Gtk", "4.0")
-
-    from gi.repository import Adw, Gdk, GObject, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
 
 TAG_DICT = Gtk.TextTag(
     name="base:dict_desc",

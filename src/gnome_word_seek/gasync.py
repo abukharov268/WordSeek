@@ -1,17 +1,8 @@
 import asyncio
-import sys
 from collections.abc import Awaitable, Callable
 from typing import cast
 
-import gi
-
-try:
-    gi.require_version("GObject", "2.0")
-
-    from gi.repository import Gio, GObject
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
+from .gnome_libs import Gio, GObject
 
 
 def wait_gasync[**P](

@@ -1,15 +1,4 @@
-import sys
-
-import gi
-
-try:
-    gi.require_version("Gtk", "4.0")
-    gi.require_version("Gdk", "4.0")
-
-    from gi.repository import Gdk, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
+from .gnome_libs import Gdk, Gtk
 
 
 def setup_css(css: str) -> None:

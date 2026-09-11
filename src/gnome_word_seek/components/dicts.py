@@ -1,26 +1,15 @@
 import asyncio
-import sys
 from collections.abc import Awaitable, Callable
 from functools import partial
 from importlib import resources
 from typing import Self
 
-import gi
-
 from word_seek.db import repo
 from word_seek.db.models import Dictionary
 
 from .. import res
+from ..gnome_libs import Adw, Gtk
 from ..typings import preserve_type_decorator
-
-try:
-    gi.require_version("Gtk", "4.0")
-    gi.require_version("Adw", "1")
-
-    from gi.repository import Adw, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
 
 
 @preserve_type_decorator(

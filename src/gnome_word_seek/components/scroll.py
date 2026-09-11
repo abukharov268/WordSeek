@@ -1,20 +1,8 @@
 import asyncio
-import sys
 from typing import Self
 
-import gi
-
+from ..gnome_libs import Graphene, Gtk
 from ..treeutil import find_near_type
-
-try:
-    gi.require_version("Graphene", "1.0")
-    gi.require_version("Gtk", "4.0")
-
-    from gi.repository import Graphene, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
-
 
 ANIMATE_RATE = 0.05
 ANIMATE_SECS = 0.3

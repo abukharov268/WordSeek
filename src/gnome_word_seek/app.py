@@ -3,7 +3,6 @@ import sys
 from datetime import UTC, datetime, timedelta
 from importlib import resources
 
-import gi
 import gi.events
 import typer
 
@@ -20,17 +19,8 @@ from .components.imports import ImportDialog
 from .components.page import ArticlesPage
 from .components.suggestion import SuggestPopup
 from .gasync import wait_gasync
+from .gnome_libs import Adw, Gdk, Gio, Gtk
 from .typings import preserve_type_decorator
-
-try:
-    gi.require_version("Gdk", "4.0")
-    gi.require_version("Gtk", "4.0")
-    gi.require_version("Adw", "1")
-
-    from gi.repository import Adw, Gdk, Gio, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
 
 
 def create_welcome_page() -> Adw.StatusPage:

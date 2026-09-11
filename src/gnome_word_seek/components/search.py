@@ -1,20 +1,9 @@
 import itertools
-import sys
 from collections.abc import Callable
 from typing import Self
 
-import gi
-
+from ..gnome_libs import Gtk
 from .scroll import Scroll
-
-try:
-    gi.require_version("Gtk", "4.0")
-
-    from gi.repository import Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
-
 
 TAG_HIGHLIGHT = Gtk.TextTag(
     name="base:highlight",

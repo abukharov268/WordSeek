@@ -1,25 +1,13 @@
 import asyncio
-import sys
 from importlib import resources
-
-import gi
 
 from word_seek import importer
 from word_seek.importer import ProgressCategory
 
 from .. import res
 from ..gasync import wait_gasync
+from ..gnome_libs import Adw, GLib, Gtk
 from ..typings import preserve_type_decorator
-
-try:
-    gi.require_version("GLib", "2.0")
-    gi.require_version("Gtk", "4.0")
-    gi.require_version("Adw", "1")
-
-    from gi.repository import Adw, GLib, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
 
 DEFAULT_TAG = Gtk.TextTag(name=ProgressCategory.OK.value, scale=0.8)
 TAGS = {

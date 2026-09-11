@@ -1,15 +1,6 @@
-import sys
 from collections.abc import Callable
 
-import gi
-
-try:
-    gi.require_version("Gtk", "4.0")
-
-    from gi.repository import Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
+from .gnome_libs import Gtk
 
 
 def find_near_widget(

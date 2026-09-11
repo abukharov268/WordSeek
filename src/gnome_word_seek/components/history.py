@@ -1,26 +1,14 @@
 import asyncio
-import sys
 from collections import OrderedDict
 from datetime import UTC, date, datetime
 from functools import partial
 from itertools import groupby
 
-import gi
-
 from word_seek.db import repo
 from word_seek.db.models import ViewLog
 from word_seek.utils.models import range_lim
 
-try:
-    gi.require_version("GObject", "2.0")
-    gi.require_version("Gtk", "4.0")
-    gi.require_version("Adw", "1")
-
-    from gi.repository import Adw, GObject, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
-
+from ..gnome_libs import Adw, GObject, Gtk
 
 LOG_COUNT = 10_000
 

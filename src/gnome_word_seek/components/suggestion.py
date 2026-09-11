@@ -1,6 +1,3 @@
-import sys
-
-import gi
 from reactivex import Subject
 from reactivex.scheduler.mainloop import GtkScheduler
 
@@ -10,16 +7,7 @@ from word_seek.eventsrc.autocomplete import (
     create_autocomplete,
 )
 
-try:
-    gi.require_version("GObject", "2.0")
-    gi.require_version("GLib", "2.0")
-    gi.require_version("Gdk", "4.0")
-    gi.require_version("Gtk", "4.0")
-
-    from gi.repository import Gdk, GLib, GObject, Gtk
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
+from ..gnome_libs import Gdk, GLib, GObject, Gtk
 
 
 class SuggestItemFactory(Gtk.SignalListItemFactory):

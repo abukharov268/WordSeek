@@ -1,21 +1,11 @@
 import logging
-import sys
 from collections.abc import Mapping
-
-import gi
 
 from word_seek.formats.visitor import XmlNodeVisitor
 
-logger = logging.getLogger()
-try:
-    gi.require_version("Gdk", "4.0")
-    gi.require_version("Gtk", "4.0")
-    gi.require_version("Pango", "1.0")
+from ..gnome_libs import Gdk, Gtk, Pango
 
-    from gi.repository import Gdk, Gtk, Pango
-except (ImportError, ValueError) as exc:
-    print("Error: Dependencies not met.", exc)
-    sys.exit(1)
+logger = logging.getLogger()
 
 
 def parse_rgba(color: str) -> Gdk.RGBA:
