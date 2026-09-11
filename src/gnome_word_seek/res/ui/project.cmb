@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<!-- Created with Cambalache 0.96.1 -->
-<cambalache-project version="0.96.0" target_tk="gtk-4.0">
-  <ui template-class="main_window" filename="window.ui" sha256="cd8bf0d00592607b872b9dd510ebd498125c4f06ea6c6641808a22f7c21f9e1d"/>
+<!-- Created with Cambalache 1.0 -->
+<cambalache-project version="1.0.0" target_tk="gtk-4.0" depends="libadwaita-1,webkitgtk-6.0">
+  <ui template-class="main_window" filename="window.ui" sha256="46195e282e9c1dfdf2ad9f1d3ef9429b44473e135414c39b86b2222edb420d89"/>
   <ui template-class="import_dialog" filename="import_dialog.ui" sha256="805a48b29eccc4dfcb304c52539ea9a8c82cc355c95d1465d28343f356c705ae"/>
   <ui template-class="dictionaries_page" filename="dictionaries_page.ui" sha256="e26bafee4a0c597ff96ea9738fc83fad225d78999dc39068d6d08fee66eced45"/>
 </cambalache-project>

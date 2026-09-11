@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.96.1 -->
+<!-- Created with Cambalache 1.0 -->
 <interface>
   <!-- interface-name window.ui -->
   <requires lib="gio" version="2.0"/>
   <requires lib="gtk" version="4.18"/>
   <requires lib="libadwaita" version="1.4"/>
   <template class="main_window" parent="AdwApplicationWindow">
-    <property name="default-height">500</property>
-    <property name="default-width">400</property>
+    <property name="default-height">520</property>
+    <property name="default-width">420</property>
     <signal name="close-request" handler="on_close_request"/>
     <child>
       <object class="AdwNavigationView" id="nav_view">
@@ -29,7 +29,7 @@
                           <object class="GtkSearchEntry" id="search_entry">
                             <property name="hexpand">True</property>
                             <property name="hexpand-set">True</property>
-                            <property name="placeholder-text">Find with "WrdSeek"</property>
+                            <property name="placeholder-text">Find with "Word Seek"</property>
                             <signal name="activate" handler="on_search_activate"/>
                           </object>
                         </child>
